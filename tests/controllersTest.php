@@ -16,6 +16,16 @@ class ControllersTest extends WebTestCase
         $this->assertContains('Welcome', $crawler->filter('body')->text());
     }
 
+    public function testHomepageRedirect()
+    {
+        $client = $this->createClient();
+        $client->followRedirects(true);
+        $crawler = $client->request('GET', '/welcome');
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('please complete', $crawler->filter('body')->text());
+    }
+
     public function createApplication()
     {
         $app = require __DIR__.'/../src/app.php';
