@@ -62,11 +62,11 @@ $app->match('/login', function (Request $request) use ($app) {
 
 $app->match('/login/reset', function (Request $request) use ($app) {
     $data = [
-        'error'=>false,
-        'message'=>'',
-        'firstname'=>'',
-        'lastname'=>'',
-        'username'=>''
+        'error' => false,
+        'message' => '',
+        'firstname' => '',
+        'lastname' => '',
+        'username' => ''
     ];
     $form = $app['form.factory']->createBuilder(FormType::class, $data)
         ->add('username', TextType::class)
@@ -123,7 +123,7 @@ $app->get('/welcome', function () use ($app) {
     if ($user == null) {
         return $app->redirect('/login');
     } else {
-        return $app['twig']->render('welcome.html.twig', ['user'=>$user]);
+        return $app['twig']->render('welcome.html.twig', ['user' => $user]);
     }
 })
 ->bind('dashboard');

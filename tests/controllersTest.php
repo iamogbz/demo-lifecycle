@@ -55,10 +55,10 @@ class ControllersTest extends WebTestCase
         $client = $this->createClient();
         $client->followRedirects(true);
         $data = [
-            'username'=>'janed',
-            'password'=>'123',
+            'username' => 'janed',
+            'password' => '123',
         ];
-        $crawler = $client->request('POST', '/login', ['form'=>$data]);
+        $crawler = $client->request('POST', '/login', ['form' => $data]);
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertContains('successful login', $crawler->filter('body')->text());
     }
@@ -69,10 +69,10 @@ class ControllersTest extends WebTestCase
         $client = $this->createClient();
         $client->followRedirects(true);
         $data = [
-            'username'=>'nouser',
-            'password'=>'nopass',
+            'username' => 'nouser',
+            'password' => 'nopass',
         ];
-        $crawler = $client->request('POST', '/login', ['form'=>$data]);
+        $crawler = $client->request('POST', '/login', ['form' => $data]);
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertContains('no match found', $crawler->filter('body')->text());
     }
