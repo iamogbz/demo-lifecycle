@@ -50,7 +50,7 @@ class User
     public function secure(Connection $db, string $plain, string $firstname, string $lastname)
     {
         $query = "UPDATE users SET password=? WHERE username=? AND first_name=? AND last_name=?";
-        return $db->executeUpdate(
+        return (bool) $db->executeUpdate(
             $query,
             [
                 password_hash($plain, PASSWORD_DEFAULT),
