@@ -111,6 +111,24 @@ $app->match('/login/reset', function (Request $request) use ($app) {
         }
     }
 });
+
+$app->get('/logout', function () use ($app) {
+    $app['session']->clear('user');
+    return $app->redirect('/');
+});
+
+// welcome controllers
+$app->get('/welcome', function () use ($app) {
+    $user = $app['session']->get('user');
+    if ($user == null) {
+        return $app->redirect('/login');
+    } else {
+        return $app['twig']->render('welcome.html.twig', ['user'=>$user]);
+    }
+})
+->bind('dashboard');
+
+// error controller
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
