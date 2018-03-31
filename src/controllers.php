@@ -59,6 +59,58 @@ $app->match('/login', function (Request $request) use ($app) {
         }
     }
 });
+
+$app->match('/login/reset', function (Request $request) use ($app) {
+    $data = [
+        'error'=>false,
+        'message'=>'',
+        'firstname'=>'',
+        'lastname'=>'',
+        'username'=>''
+    ];
+    $form = $app['form.factory']->createBuilder(FormType::class, $data)
+        ->add('username', TextType::class)
+        ->add('firstname', TextType::class)
+        ->add('lastname', TextType::class)
+        ->add('newpassword', PasswordType::class)
+        ->add('verpassword', PasswordType::class)
+        ->add('submit', SubmitType::class, ['label' => 'Enter'])
+        ->getForm();
+
+    $form->handleRequest($request);
+    $data = $form->getData();
+    if (empty($data['username'])) {
+        $data['username'] = $request->query->get('username');
+    }
+    if (empty($data['newpassword'])) {
+        // display the form
+        return $app['twig']->render('login.reset.html.twig', $data);
+    } else {
+        $user = new User($data['username']);
+        if ($user->exists($app['db'])) {
+            if ($data['newpassword'] == $data['verpassword']) {
+                $data['error'] = !$user->secure(
+                    $app['db'],
+                    $data['newpassword'],
+                    $data['firstname'],
+                    $data['lastname']
+                );
+                $data['message'] = $data['error'] ? "Unable to reset login password" : "Password reset successful";
+            } else {
+                $data['error'] = true;
+                $data['message'] = 'Passwords do not match';
+            }
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'Username not recognised';
+        }
+        if ($data['error']) {
+            return $app['twig']->render('login.reset.html.twig', $data);
+        } else {
+            return $app['twig']->render('login.html.twig', $data);
+        }
+    }
+});
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
