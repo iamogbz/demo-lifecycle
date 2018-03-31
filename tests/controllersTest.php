@@ -139,4 +139,15 @@ class ControllersTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertContains('Unable to reset login', $crawler->filter('body')->text());
     }
+
+    public function testLogout()
+    {
+        $client = $this->createClient();
+        $client->followRedirects(true);
+        $crawler = $client->request('GET', '/logout');
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('complete details below', $crawler->filter('body')->text());
+        $this->assertNull($this->app['session']->get('user'));
+    }
 }
