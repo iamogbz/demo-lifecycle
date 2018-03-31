@@ -48,4 +48,33 @@ class ControllersTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertContains('please complete', $crawler->filter('body')->text());
     }
+
+    public function testLoginSuccess()
+    {
+        unset($this->app['exception_handler']);
+        $client = $this->createClient();
+        $client->followRedirects(true);
+        $data = [
+            'username'=>'janed',
+            'password'=>'123',
+        ];
+        $crawler = $client->request('POST', '/login', ['form'=>$data]);
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('successful login', $crawler->filter('body')->text());
+    }
+
+    public function testLoginFailure()
+    {
+        unset($this->app['exception_handler']);
+        $client = $this->createClient();
+        $client->followRedirects(true);
+        $data = [
+            'username'=>'nouser',
+            'password'=>'nopass',
+        ];
+        $crawler = $client->request('POST', '/login', ['form'=>$data]);
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('no match found', $crawler->filter('body')->text());
+    }
+    }
 }
