@@ -1,5 +1,12 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-    Welcome, firstName lastName! This is the page to which the user should be redirected upon successful login.
+    <div class="container vertical">
+        <span class="title">Welcome,
+            {{ user.firstName }}
+            {{ user.lastName}}!
+        </span>
+        <span class="message">This is the page to which the user should be redirected upon successful login.</span>
+        <a href="/logout">sign out</a>
+    </div>
 {% endblock %}
