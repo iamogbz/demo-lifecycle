@@ -13,10 +13,10 @@ class User
     
     /**
      * Initialise user model
-     * @param String username
+     * @param string username
      * @param Connection db connection pass to load values from database
      */
-    public function __construct(String $username, Connection $db = null)
+    public function __construct(string $username, Connection $db = null)
     {
         $this->username = $username;
         $this->exists = false;
@@ -28,10 +28,10 @@ class User
     /**
      * Authenticate user with password
      * @param Connection db connection
-     * @param String plain password
-     * @return Bool
+     * @param string plain password
+     * @return bool
      */
-    public function authenticate(Connection $db, String $plain)
+    public function authenticate(Connection $db, string $plain)
     {
         $query = "SELECT password FROM users WHERE username = ?";
         $result = $db->fetchAssoc($query, [$this->username]);
@@ -42,12 +42,12 @@ class User
     /**
      * Update user password
      * @param Connection db
-     * @param String plain
-     * @param String firstname
-     * @param String lastname
-     * @return Bool
+     * @param string plain
+     * @param string firstname
+     * @param string lastname
+     * @return bool
      */
-    public function secure(Connection $db, String $plain, String $firstname, string $lastname)
+    public function secure(Connection $db, string $plain, string $firstname, string $lastname)
     {
         $query = "UPDATE users SET password=? WHERE username=? AND first_name=? AND last_name=?";
         return $db->executeUpdate(
@@ -90,7 +90,7 @@ class User
     /**
      * Check if user exists in database
      * @param Connection db connection
-     * @return Bool
+     * @return bool
      */
     public function exists(Connection $db)
     {
@@ -100,7 +100,7 @@ class User
 
     /**
      * Get user first name
-     * @return String
+     * @return string
      */
     public function getFirstName()
     {
@@ -109,7 +109,7 @@ class User
 
     /**
      * Get user last name
-     * @return String
+     * @return string
      */
     public function getLastName()
     {
