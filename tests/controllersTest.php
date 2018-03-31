@@ -76,5 +76,57 @@ class ControllersTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isOk());
         $this->assertContains('no match found', $crawler->filter('body')->text());
     }
+
+    public function testGetLoginReset()
+    {
+        $client = $this->createClient();
+        $client->followRedirects(true);
+        $crawler = $client->request('GET', '/login/reset');
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('Reset Login', $crawler->filter('body')->text());
+    }
+
+    public function testLoginResetSuccess()
+    {
+        $client = $this->createClient();
+        $client->followRedirects(true);
+        $data = [
+            'form' => [
+                'firstname' => 'Jane',
+                'lastname' => 'Doe',
+                'newpassword' => '123',
+                'verpassword' => '123',
+            ]
+        ];
+        $crawler = $client->request('POST', '/login/reset?username=janed', $data);
+
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('reset successful', $crawler->filter('body')->text());
+    }
+
+    public function testLoginResetFailure()
+    {
+        $client = $this->createClient();
+        $data = [
+            'form' => [
+                'firstname' => 'Jane',
+                'lastname' => 'Does',
+                'newpassword' => '123',
+                'verpassword' => '321',
+            ]
+        ];
+        $crawler = $client->request('POST', '/login/reset?username=jane', $data);
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('Username not recognised', $crawler->filter('body')->text());
+
+        $crawler = $client->request('POST', '/login/reset?username=janed', $data);
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('Passwords do not match', $crawler->filter('body')->text());
+        
+        $data['form']['verpassword'] = $data['form']['newpassword'];
+        $crawler = $client->request('POST', '/login/reset?username=janed', $data);
+        $this->assertTrue($client->getResponse()->isOk());
+        $this->assertContains('Unable to reset login', $crawler->filter('body')->text());
     }
 }
