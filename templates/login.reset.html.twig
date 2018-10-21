@@ -1,0 +1,22 @@
+{% extends "index.html.twig" %}
+
+{% block content %}
+    <div id="login-container" class="login container vertical">
+        <span class="title">Reset Login</span>
+        <span class="status message {% if error %}error{% endif %}">
+            {% if message %}
+                {{ message }}
+            {% else %}
+                fields are case sensitive
+            {% endif %}
+        </span>
+        <form method="POST" action="#" class="login container vertical" id="reset-form">
+            <input class="field center" name="form[username]" type="text" autocomplete="off" disabled="true" value="{{ username }}"/>
+            <input class="field center" name="form[firstname]" type="text" autocomplete="off" placeholder="First name" value="{{ firstname }}"/>
+            <input class="field center" name="form[lastname]" type="text" autocomplete="off" placeholder="Last name" value="{{ lastname }}"/>
+            <input class="field center" name="form[newpassword]" type="password" placeholder="New Password">
+            <input class="field center" name="form[verpassword]" type="password" placeholder="Confirm Password">
+            <input class="button" name="form[submit]" type="submit" value="Submit"/>
+        </form>
+    </div>
+{% endblock %}

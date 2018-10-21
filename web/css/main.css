@@ -1,0 +1,104 @@
+/**
+ * Reset CSS
+ */
+
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    transition: all .2s;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/**
+ * Main CSS
+ */
+
+body {
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.title {
+    font-size: 2em;
+    padding: 8px;
+}
+
+.status {
+    font-size: .8em;
+}
+
+.error {
+    color: red;
+}
+
+.field {
+    padding: 8px;
+    margin: 4px;
+    border: solid 1px;
+    border-radius: 4px;
+}
+
+.field.center {
+    text-align: center;
+}
+
+.button {
+    margin: 2px;
+    margin-top: 8px;
+    border: solid 2px;
+    border-radius: 4px;
+    padding: 8px 16px;
+}
+
+div.login.container {
+    padding-top: 64px;
+}
+
+div.login .message {
+    text-align: center;
+}
+
+form.login {
+    padding: 8px;
+}

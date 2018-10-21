@@ -1,0 +1,22 @@
+{% extends "index.html.twig" %}
+
+{% block content %}
+    <div id="login-container" class="login container vertical">
+        <span class="title">Welcome</span>
+        <span class="message status {% if error %}error{% endif %}">
+            {% if message %}
+                {{ message }}
+            {% else %}
+                please complete details below
+            {% endif %}
+            {% if error %}
+                <a href="/login/reset?username={{ username }}">reset password</a>
+            {% endif %}
+        </span>
+        <form method="POST" action="/login" class="login container vertical" id="login-form">
+            <input class="field center" name="form[username]" type="text" autocomplete="off" placeholder="Username" value="{{ username }}"/>
+            <input class="field center" name="form[password]" type="password" placeholder="Password">
+            <input class="button" name="form[submit]" type="submit" value="Enter"/>
+        </form>
+    </div>
+{% endblock %}
